@@ -1,6 +1,6 @@
+#include <glew.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_opengl.h>
-
 #include <stdio.h>
 
 #define SCREEN_WIDTH 	800
@@ -12,6 +12,7 @@ int main(int argc, const char *argv[])
 	SDL_Window *window;
 	SDL_GLContext context;
 	SDL_Event window_event;
+	GLuint vertex_buf;
 
 	if (SDL_Init(SDL_INIT_VIDEO) < 0) {
 		fprintf(stderr, "SDL couldn't init! SDL_Error: %s\n", SDL_GetError());
@@ -27,6 +28,12 @@ int main(int argc, const char *argv[])
 	if (!window)
 		fprintf(stderr, "window creation failed! SDL_Error: %s\n", SDL_GetError());
 	context = SDL_GL_CreateContext(window);
+
+	glewExperimental = GL_TRUE;
+	glewInit();
+	glGenBuffers(1, &vertex_buf);
+	printf("%u\n", vertex_buf);
+
 
 	while (1) {
 		if (SDL_PollEvent(&window_event)) {
